@@ -1,44 +1,8 @@
 library(hbgd)
+
 shinyServer(function(input, output) {
   
-  output$value <- renderPrint({input$percentile})
-  
-  
-  centileCalc<-eventReactive(input$goButton2, {
-    
-#     # if centile is Female
-# 
-# #     if((input$sexCentile)=="2"){
-# #       tempCentile<-igb_centile2hcircm(input$gagebrthCentile, p = input$percentile, sex = "Female")}
-# #     # if centile is Male
-# #     if((input$sexCentile)=="1"){
-# #       tempCentile<-igb_centile2hcircm(input$gagebrthCentile, p = input$percentile, sex = "Male")}
-# #    
-#     
-#  tempCentile<-igb_centile2hcircm(input$gagebrthCentile, p = input$percentile, sex = input$sexCentile)
-#     
-#     return(tempCentile)
-#     
-   })
-  
-  output$centileOutput<-renderText({
-    if(input$choiceCentile==1){
-      measurement<-"head circumference (cm) "
-    tempCentile<-igb_centile2hcircm(input$gagebrthCentile, p = input$percentile, sex = input$sexCentile)
-    }
-    if(input$choiceCentile==2){
-      measurement<-"length (cm)"
-      tempCentile<-igb_centile2lencm(input$gagebrthCentile, p = input$percentile, sex = input$sexCentile)
-    }
-    if(input$choiceCentile==3){
-      measurement<-"weight (kg)"
-      tempCentile<-igb_centile2wtkg(input$gagebrthCentile, p = input$percentile, sex = input$sexCentile)
-    }
-   # return(tempCentile)
-    return(c("A",input$sexCentile, "baby who is ", input$gagebrthCentile, "days old under the", paste0(input$percentile, "th Centile has a"), measurement, "of", round(tempCentile, 3)))
-   
-  })
-  
+#### FIRST TAB ####
   
   ## Loading in the csv file
   datasetInput <- eventReactive(input$goButton, {
@@ -106,4 +70,30 @@ shinyServer(function(input, output) {
       write.csv(datasetInput(), file)
     }
   )
+
+
+### SECOND TAB ###
+output$value <- renderPrint({input$percentile})
+
+
+output$centileOutput<-renderText({
+  if(input$choiceCentile==1){
+    measurement<-"head circumference (cm) "
+    tempCentile<-igb_centile2hcircm(input$gagebrthCentile, p = input$percentile, sex = input$sexCentile)
+  }
+  if(input$choiceCentile==2){
+    measurement<-"length (cm)"
+    tempCentile<-igb_centile2lencm(input$gagebrthCentile, p = input$percentile, sex = input$sexCentile)
+  }
+  if(input$choiceCentile==3){
+    measurement<-"weight (kg)"
+    tempCentile<-igb_centile2wtkg(input$gagebrthCentile, p = input$percentile, sex = input$sexCentile)
+  }
+  # return(tempCentile)
+  return(c("A",input$sexCentile, "baby who is ", input$gagebrthCentile, "days old under the", paste0(input$percentile, "th Centile has a"), measurement, "of", round(tempCentile, 3)))
+  
+})
+
+
+
 })

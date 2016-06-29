@@ -1,6 +1,7 @@
 library(hbgd)
 
 shinyUI(navbarPage("Intergrowth CDC", 
+                   ### FIRST TAB ###
                    tabPanel("Intergrowth Birth Standards (232 to 300 days)",
                             pageWithSidebar(
                               
@@ -40,6 +41,8 @@ shinyUI(navbarPage("Intergrowth CDC",
                                           downloadButton('downloadData', 'Download')
                               )
                             )),
+                   
+                   ### SECOND TAB ###
                    tabPanel("Centile calculator (232 to 300 days)",
                             pageWithSidebar(
                               headerPanel('Centile calculator'),
