@@ -1,0 +1,6 @@
+{
+  "name": "Intergrowth Application",
+  "tagline": "",
+  "body": "# Intergrowth Growth Standards App\r\n\r\n[Intergrowth App](http://skhan8.github.io/intergrowthApp/) wraps the [hbgd package](http://hafen.github.io/docs-hbgd/index.html) into a Shiny application. \r\n\r\n## Citation\r\n\r\nThe HBGD package is licensed under an MIT license.\r\n\r\n### The Application\r\n\r\nThis application is meant to serve as a tool for analysis of proper growth centiles. Currently, the INTERGROWTH newborn size standard from gestational age in days from 232-300 is accommodated in this application.\r\n\r\n## Launching an Intergrowth App Local Session\r\n\r\nTo open this app on your own computer, you'll need to do the following steps:\r\n\r\n1) Install [the latest R version](https://www.r-project.org/).\r\n2) Install [RStudio](https://www.rstudio.com/).\r\n3) Run the following R code within an open session of RStudio\r\n\r\n```r\r\ninstall.packages(c(\"shiny\",\"hbgd)) \r\nshiny::runGitHub(\"intergrowthApp\",\"skhan8\")\r\n```\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
