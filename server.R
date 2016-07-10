@@ -19,7 +19,7 @@ shinyServer(function(input, output) {
     names(inFile)[names(inFile) == 'weight'] <- 'wtkg'
     names(inFile)[names(inFile) == 'gender'] <- 'sex'
     names(inFile)[names(inFile) == 'hc_cm'] <- 'hcircm'
-    
+    inFile$age_weeks<- inFile$age_weeks*7
     ########### ONE WHO
     
     WHOData<-inFile
@@ -33,7 +33,7 @@ shinyServer(function(input, output) {
     
     WHOData["WHO_headZScore"] <- NA
     WHOData["WHO_headCentile"] <- NA
-    WHOData$age_weeks<- WHOData$age_weeks*7
+  
     
     badRowsWHO<-WHOData[( !is.numeric(WHOData$age_weeks) | WHOData$age_weeks<=0),]
     
@@ -91,7 +91,7 @@ shinyServer(function(input, output) {
     ###############
     
     totalDataset<-merge(IGB,WHO,by=c("subjid","sex","gagebrth","hcircm","wtkg","length","age_weeks"),all=T)
-    
+    totalDataset$age_weeks<-totalDataset$age_weeks/7
     return(totalDataset)
   })
   
