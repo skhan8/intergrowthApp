@@ -1,4 +1,4 @@
-subjid,sex,gagebrth,hcircm,wtkg,lencm
+subjid,gender,gestage,hc_cm,weight,length
 1,Male,255,28,2.4,44
 2,Male,280,27,,30
 3,Female,230,30,3.8,48
