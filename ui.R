@@ -1,30 +1,28 @@
 library(hbgd)
 
-shinyUI(navbarPage("Intergrowth CDC", 
+shinyUI(navbarPage("Birth Standards - CDC", 
                    ### FIRST TAB ###
-                   tabPanel("Intergrowth Birth Standards (232 to 300 days)",
+                   tabPanel("Birth Standards by Intergrowth (232 days to 300 days) and WHO standards",
                             pageWithSidebar(
-                              
-                              
+                                                          
                               headerPanel(''),
                               sidebarPanel(    
                                 h4(p(style = "color:dodgerblue","Step 1.")),
-                                "Prepare the data file like so:",hr(),
-                                
-                                tableOutput('table2'),
+                                "Prepare a data file in the following format:",                            
+                                tableOutput('table2'),"** means required",
                                 #     img(src = 'capture.PNG', align = "center"),
-                                #     hr(),
+                                   hr(),
                                 h4(p(style = "color:dodgerblue","Step 2.")),
-                                "Upload the data file (only .csv accepted)",
-                                hr(),
+                                "Upload the data file (accepted format: .csv)",
                                 fileInput('file1', 'Choose CSV File',
                                           accept=c('text/csv', 
                                                    'text/comma-separated-values,text/plain', 
                                                    '.csv')),
                                 hr(),
-                                checkboxInput('headcm', 'Head Circumference'),
-                                checkboxInput('wt', 'Weight'),
-                                checkboxInput('len', 'Length'),
+#                                 h4(p(style = "color:dodgerblue","Step 3.")),"Choose one or more standards to create:",
+#                                 checkboxInput('headcm', 'Head Circumference'),
+#                                 checkboxInput('wt', 'Weight'),
+#                                 checkboxInput('len', 'Length'),
                                 actionButton("goButton", "Start Analysis!")
                                 #,
                                 # radioButtons('mm', 'Measurement:',
@@ -38,6 +36,9 @@ shinyUI(navbarPage("Intergrowth CDC",
                                           tableOutput('table'),
                                           
                                           h4(p(style = "color:dodgerblue","Download the data")),
+                                          "Once the output table appears above, you can download the data.",br(),
+                                          em("Tip: You may need to open the app in your local browser (see: 'Open In browser' (top-left)) to download successfully"),
+                                          hr(),
                                           downloadButton('downloadData', 'Download')
                               )
                             )),
