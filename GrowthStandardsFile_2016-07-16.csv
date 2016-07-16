@@ -1,0 +1,5 @@
+"","subjid","gender","gestage","hc_cm","weight","length","age_weeks","igb_lenZScore","igb_lenCentile","igb_wtZScore","igb_wtCentile","igb_headZScore","igb_headCentile","WHO_lenZScore","WHO_lenCentile","WHO_wtZScore","WHO_wtCentile","WHO_headZScore","WHO_headCentile"
+"1",1,1,255,28,2.4,44,1,NA,NA,NA,NA,NA,NA,-3.73890139239059,0.00924131008485605,-2.45175568227651,0.710805745945573,-5.86743956568373,2.21288120123629e-07
+"2",2,NA,280,27,NA,30,34,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"3",3,0,230,30,3.8,48,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"4",4,1,295,35,3.9,38,0,-5.21044616786552,9.41935187547069e-06,0.632381619258172,73.6431229145574,-0.115501887645501,45.4023662183474,NA,NA,NA,NA,NA,NA

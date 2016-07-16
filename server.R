@@ -14,12 +14,16 @@ shinyServer(function(input, output) {
     fileRead <- input$file1
     
     inFile<-read.csv(fileRead$datapath, header=T)
+  
+    inFile$age_weeks<- inFile$age_weeks*7
     
+    inFile$gender<-ifelse(inFile$gender == 1, "Male", ifelse(inFile$gender == 0, "Female", NA))
     names(inFile)[names(inFile) == 'gestage'] <- 'gagebrth'
     names(inFile)[names(inFile) == 'weight'] <- 'wtkg'
     names(inFile)[names(inFile) == 'gender'] <- 'sex'
     names(inFile)[names(inFile) == 'hc_cm'] <- 'hcircm'
-    inFile$age_weeks<- inFile$age_weeks*7
+    
+    
     ########### ONE WHO
     
     WHOData<-inFile
@@ -33,29 +37,34 @@ shinyServer(function(input, output) {
     
     WHOData["WHO_headZScore"] <- NA
     WHOData["WHO_headCentile"] <- NA
-  
     
-    badRowsWHO<-WHOData[( !is.numeric(WHOData$age_weeks) | WHOData$age_weeks<=0),]
+    
+    badRowsWHO<-WHOData[( !is.numeric(WHOData$age_weeks) | WHOData$age_weeks<=0 | is.na(WHOData$age_weeks)) | is.na(WHOData$sex) ,]
     
     #keeping the good rows that can go ahead and be pushed through the calc. 
-    goodRowsWHO<-WHOData[( is.numeric(WHOData$age_weeks) & WHOData$age_weeks>0),]
-
+    # goodRowsWHO<-WHOData[( is.numeric(WHOData$age_weeks) & WHOData$age_weeks>0),]
+    goodRowsWHO<-WHOData[!(WHOData$subjid %in% badRowsWHO$subjid),]
     
     ################### WHO ANALYSIS 
     
-    goodRowsWHO$WHO_lenZScore <- who_htcm2zscore(goodRowsWHO$age_weeks, goodRowsWHO$htcm, sex = goodRowsWHO$sex)
-    goodRowsWHO$WHO_lenCentile <- who_htcm2centile(goodRowsWHO$age_weeks, goodRowsWHO$htcm, sex = goodRowsWHO$sex)
-    
-    goodRowsWHO$WHO_wtZScore <- who_wtkg2zscore(goodRowsWHO$age_weeks, goodRowsWHO$wtkg, sex = goodRowsWHO$sex)
-    goodRowsWHO$WHO_wtCentile <- who_wtkg2centile(goodRowsWHO$age_weeks, goodRowsWHO$wtkg, sex = goodRowsWHO$sex)
-    
-    goodRowsWHO$WHO_headZScore <- who_hcircm2zscore(goodRowsWHO$age_weeks, goodRowsWHO$hcircm, sex = goodRowsWHO$sex)
-    goodRowsWHO$WHO_headCentile <- who_hcircm2centile(goodRowsWHO$age_weeks, goodRowsWHO$hcircm, sex = goodRowsWHO$sex)
+    if (nrow(goodRowsWHO) == 0){ 
+    } else {
+      goodRowsWHO$WHO_lenZScore <- who_htcm2zscore(goodRowsWHO$age_weeks, goodRowsWHO$htcm, sex = goodRowsWHO$sex)
+      goodRowsWHO$WHO_lenCentile <- who_htcm2centile(goodRowsWHO$age_weeks, goodRowsWHO$htcm, sex = goodRowsWHO$sex)
+      
+      goodRowsWHO$WHO_wtZScore <- who_wtkg2zscore(goodRowsWHO$age_weeks, goodRowsWHO$wtkg, sex = goodRowsWHO$sex)
+      goodRowsWHO$WHO_wtCentile <- who_wtkg2centile(goodRowsWHO$age_weeks, goodRowsWHO$wtkg, sex = goodRowsWHO$sex)
+      
+      goodRowsWHO$WHO_headZScore <- who_hcircm2zscore(goodRowsWHO$age_weeks, goodRowsWHO$hcircm, sex = goodRowsWHO$sex)
+      goodRowsWHO$WHO_headCentile <- who_hcircm2centile(goodRowsWHO$age_weeks, goodRowsWHO$hcircm, sex = goodRowsWHO$sex)
+    }
     
     WHO <- rbind(goodRowsWHO, badRowsWHO)
     names(WHO)[names(WHO) == 'htcm'] <- 'length'
-    ########### ONE IGB
+    rownames(WHO)<-NULL
     
+    
+    ########### ONE IGB
     
     IGBData<-inFile
     
@@ -70,28 +79,44 @@ shinyServer(function(input, output) {
     IGBData["igb_headZScore"] <- NA
     IGBData["igb_headCentile"] <- NA
     
-    badRowsIGB<-IGBData[(inFile$gagebrth>300) | (inFile$gagebrth<=232) | !is.numeric(inFile$gagebrth) ,]
+    
+    badRowsIGB<-IGBData[(IGBData$gagebrth>300) | (IGBData$gagebrth<=232) | !is.numeric(IGBData$gagebrth) | is.na(IGBData$gagebrth) 
+                        | is.na(IGBData$sex) | (IGBData$age_weeks>0),]
     
     #keeping the good rows that can go ahead and be pushed through the calc. 
-    goodRowsIGB<-IGBData[!((inFile$gagebrth>300) | (inFile$gagebrth<=232)) & is.numeric(inFile$gagebrth) ,]
+    # goodRowsIGB<-IGBData[!((inFile$gagebrth>300) | (inFile$gagebrth<=232)) & is.numeric(inFile$gagebrth),]
+    
+    goodRowsIGB<-IGBData[!(IGBData$subjid %in% badRowsIGB$subjid),]
     
     ################### IGB ANALYSIS 
-    
-    goodRowsIGB$igb_lenZScore <- igb_lencm2zscore(goodRowsIGB$gagebrth, goodRowsIGB$lencm, sex = goodRowsIGB$sex)
-    goodRowsIGB$igb_lenCentile <- igb_lencm2centile(goodRowsIGB$gagebrth, goodRowsIGB$lencm, sex = goodRowsIGB$sex)
-    
-    goodRowsIGB$igb_wtZScore <- igb_wtkg2zscore(goodRowsIGB$gagebrth, goodRowsIGB$wtkg, sex = goodRowsIGB$sex)
-    goodRowsIGB$igb_wtCentile <- igb_wtkg2centile(goodRowsIGB$gagebrth, goodRowsIGB$wtkg, sex = goodRowsIGB$sex)
-    
-    goodRowsIGB$igb_headZScore <- igb_hcircm2zscore(goodRowsIGB$gagebrth, goodRowsIGB$hcircm, sex = goodRowsIGB$sex)
-    goodRowsIGB$igb_headCentile <- igb_hcircm2centile(goodRowsIGB$gagebrth, goodRowsIGB$hcircm, sex = goodRowsIGB$sex)
-    
+    if (nrow(goodRowsIGB) == 0){ 
+    } else {
+      goodRowsIGB$igb_lenZScore <- igb_lencm2zscore(goodRowsIGB$gagebrth, goodRowsIGB$lencm, sex = goodRowsIGB$sex)
+      goodRowsIGB$igb_lenCentile <- igb_lencm2centile(goodRowsIGB$gagebrth, goodRowsIGB$lencm, sex = goodRowsIGB$sex)
+      
+      goodRowsIGB$igb_wtZScore <- igb_wtkg2zscore(goodRowsIGB$gagebrth, goodRowsIGB$wtkg, sex = goodRowsIGB$sex)
+      goodRowsIGB$igb_wtCentile <- igb_wtkg2centile(goodRowsIGB$gagebrth, goodRowsIGB$wtkg, sex = goodRowsIGB$sex)
+      
+      goodRowsIGB$igb_headZScore <- igb_hcircm2zscore(goodRowsIGB$gagebrth, goodRowsIGB$hcircm, sex = goodRowsIGB$sex)
+      goodRowsIGB$igb_headCentile <- igb_hcircm2centile(goodRowsIGB$gagebrth, goodRowsIGB$hcircm, sex = goodRowsIGB$sex)
+    }
     IGB <- rbind(goodRowsIGB, badRowsIGB)
     names(IGB)[names(IGB) == 'lencm'] <- 'length'
+    
+    IGB<-(IGB[!grepl('NA', rownames(IGB)),])
+    
+    rownames(IGB)<-NULL
+    
     ###############
     
     totalDataset<-merge(IGB,WHO,by=c("subjid","sex","gagebrth","hcircm","wtkg","length","age_weeks"),all=T)
     totalDataset$age_weeks<-totalDataset$age_weeks/7
+    totalDataset$sex<-ifelse(inFile$sex == "Male", 1, ifelse(inFile$sex == "Female", 0, NA))
+    names(totalDataset)[names(totalDataset) == 'gagebrth'] <- 'gestage'
+    names(totalDataset)[names(totalDataset) == 'wtkg'] <- 'weight'
+    names(totalDataset)[names(totalDataset) == 'sex'] <- 'gender'
+    names(totalDataset)[names(totalDataset) == 'hcircm'] <- 'hc_cm'
+    
     return(totalDataset)
   })
   
@@ -103,7 +128,7 @@ shinyServer(function(input, output) {
   ## this is for illustrative purposes to show what format the files should be in
   output$table2 <- renderTable({
     header  = c("subjid**",  "gender**",	"gestage**",	"hc_cm",	"weight",	"length", "age_weeks") 
-    format  = c("Numeric","Male or Female","Gestational age at birth (days)","Head circumference (cm)",
+    format  = c("Numeric","Numeric (Male=1, Female=0)","Gestational age at birth (days)","Head circumference (cm)",
                 "weight (kg)", "Recumbent length (cm)", "Age in whole weeks")
     df = data.frame(header, format) 
     

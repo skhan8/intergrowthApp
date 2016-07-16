@@ -1,4 +1,5 @@
-subjid,gender,gestage,hc_cm,weight,length
-1,Male,255,28,2.4,44
-2,Male,280,27,,30
-3,Female,230,30,3.8,48
+subjid,gender,gestage,hc_cm,weight,length,age_weeks
+1,1,255,28,2.4,44,1
+2,,280,27,,30,34
+3,0,230,30,3.8,48,
+4,1,295,35,3.9,38,0
