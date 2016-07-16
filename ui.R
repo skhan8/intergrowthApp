@@ -29,17 +29,17 @@ shinyUI(navbarPage("Birth Standards - CDC",
                                 #              c("Centile" = 1, "Z-Score" = 2))
                                 
                               ),
-                              mainPanel(  h4(p(style = "color:dodgerblue","Output")),
-                                          hr(),
-                                          
-                                          
-                                          tableOutput('table'),
-                                          
+                              mainPanel(  
                                           h4(p(style = "color:dodgerblue","Download the data")),
-                                          "Once the output table appears above, you can download the data.",br(),
+                                          "Once the output table appears below, you can download the data.",br(),
                                           em("Tip: You may need to open the app in your local browser (see: 'Open In browser' (top-left)) to download successfully"),
                                           hr(),
-                                          downloadButton('downloadData', 'Download')
+                                          downloadButton('downloadData', 'Download'),
+                                          h4(p(style = "color:dodgerblue","Output")),
+                                          hr(),
+                                          tableOutput('table')
+                                          
+                                         
                               )
                             )),
                    
