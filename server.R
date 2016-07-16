@@ -14,14 +14,20 @@ shinyServer(function(input, output) {
     fileRead <- input$file1
     
     inFile<-read.csv(fileRead$datapath, header=T)
-  
-    inFile$age_weeks<- inFile$age_weeks*7
     
+    inFile$gender<-as.numeric(as.character((inFile$gender)))
     inFile$gender<-ifelse(inFile$gender == 1, "Male", ifelse(inFile$gender == 0, "Female", NA))
     names(inFile)[names(inFile) == 'gestage'] <- 'gagebrth'
     names(inFile)[names(inFile) == 'weight'] <- 'wtkg'
     names(inFile)[names(inFile) == 'gender'] <- 'sex'
     names(inFile)[names(inFile) == 'hc_cm'] <- 'hcircm'
+    
+    
+    inFile$gagebrth<-as.numeric(as.character((inFile$gagebrth)))
+    inFile$wtkg<-as.numeric(as.character((inFile$wtkg)))
+    inFile$hcircm<-as.numeric(as.character((inFile$hcircm)))
+    inFile$age_weeks<-as.numeric(as.character((inFile$age_weeks)))*7
+    inFile$length<-as.numeric(as.character((inFile$length)))
     
     
     ########### ONE WHO
