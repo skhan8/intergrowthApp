@@ -15,6 +15,7 @@ shinyServer(function(input, output) {
     
     inFile<-read.csv(fileRead$datapath, header=T)
     
+    names(inFile)<- tolower(names(inFile))
     inFile$gender<-as.numeric(as.character((inFile$gender)))
     inFile$gender<-ifelse(inFile$gender == 1, "Male", ifelse(inFile$gender == 0, "Female", NA))
     names(inFile)[names(inFile) == 'gestage'] <- 'gagebrth'
@@ -28,8 +29,6 @@ shinyServer(function(input, output) {
     inFile$hcircm<-as.numeric(as.character((inFile$hcircm)))
     inFile$age_weeks<-as.numeric(as.character((inFile$age_weeks)))*7
     inFile$length<-as.numeric(as.character((inFile$length)))
-    
-    
     ########### ONE WHO
     
     WHOData<-inFile
