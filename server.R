@@ -116,7 +116,7 @@ shinyServer(function(input, output) {
     
     totalDataset<-merge(IGB,WHO,by=c("subjid","sex","gagebrth","hcircm","wtkg","length","age_weeks"),all=T)
     totalDataset$age_weeks<-totalDataset$age_weeks/7
-    totalDataset$sex<-ifelse(inFile$sex == "Male", 1, ifelse(inFile$sex == "Female", 0, NA))
+    #totalDataset$sex<-ifelse(inFile$sex == "Male", 1, ifelse(inFile$sex == "Female", 0, NA))
     names(totalDataset)[names(totalDataset) == 'gagebrth'] <- 'gestage'
     names(totalDataset)[names(totalDataset) == 'wtkg'] <- 'weight'
     names(totalDataset)[names(totalDataset) == 'sex'] <- 'gender'
