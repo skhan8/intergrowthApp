@@ -54,7 +54,7 @@ shinyUI(navbarPage("Birth Standards - CDC",
                                                        min = 0.01, 
                                                        max = 99.99, value = 50),
 #                                            h5(p(style = "color:dodgerblue","You've selected this centile:")),
-                                           verbatimTextOutput("value"),
+#                                           verbatimTextOutput("value"),
                                            
                                            radioButtons("sexCentile", label = h3("Sex:"),
                                                         choices = list("Male" = "Male", "Female" = "Female"), 
