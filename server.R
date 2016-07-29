@@ -85,7 +85,7 @@ shinyServer(function(input, output) {
     IGBData["igb_headCentile"] <- NA
     
     
-    badRowsIGB<-IGBData[(IGBData$gagebrth>300) | !is.numeric(IGBData$gagebrth) | is.na(IGBData$gagebrth) 
+    badRowsIGB<-IGBData[(IGBData$gagebrth>300) |(IGBData$gagebrth<168) | !is.numeric(IGBData$gagebrth) | is.na(IGBData$gagebrth) 
                         | is.na(IGBData$sex) | (IGBData$age_weeks>0),]
     
     #keeping the good rows that can go ahead and be pushed through the calc. 
