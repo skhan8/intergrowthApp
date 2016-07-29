@@ -1,8 +1,10 @@
 library(hbgd)
 
+
+
 shinyUI(navbarPage("Birth Standards - CDC", 
                    ### FIRST TAB ###
-                   tabPanel("Birth Standards by Intergrowth (232 days to 300 days) and WHO standards",
+                   tabPanel("Birth Standards by Intergrowth (168 days to 300 days) and WHO standards",
                             pageWithSidebar(
                                                           
                               headerPanel(''),
@@ -44,7 +46,7 @@ shinyUI(navbarPage("Birth Standards - CDC",
                             )),
                    
                    ### SECOND TAB ###
-                   tabPanel("Centile calculator (232 to 300 days)",
+                   tabPanel("Centile calculator (168 to 300 days)",
                             pageWithSidebar(
                               headerPanel('Centile calculator'),
                               
@@ -59,7 +61,7 @@ shinyUI(navbarPage("Birth Standards - CDC",
                                                         selected = "Male"),
                                            
                                            
-                                           numericInput("gagebrthCentile", label = h3("Gestational birth in days (232-300)"),
+                                           numericInput("gagebrthCentile", label = h3("Gestational birth in days (168-300)"),
                                                         min=231, max=300, value=270)
 #                                            ,
 #                  
