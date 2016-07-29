@@ -50,10 +50,10 @@ shinyUI(navbarPage("Birth Standards - CDC",
                             pageWithSidebar(
                               headerPanel('Centile calculator'),
                               
-                              sidebarPanel(numericInput("percentile", label = h3("Pick a centile:"), 
+                              sidebarPanel(numericInput("percentile", label = h3("Pick a centile (0 to 100):"), 
                                                        min = 0.01, 
                                                        max = 99.99, value = 50),
-                                           h5(p(style = "color:dodgerblue","You've selected this centile:")),
+#                                            h5(p(style = "color:dodgerblue","You've selected this centile:")),
                                            verbatimTextOutput("value"),
                                            
                                            radioButtons("sexCentile", label = h3("Sex:"),
