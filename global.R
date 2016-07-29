@@ -6,11 +6,11 @@
 #' @param var the name of the measurement to convert ("lencm", "wtkg", "hcircm")
 #' @param sex "Male" or "Female"
 #' @references International standards for newborn weight, length, and head circumference by gestational age and sex: the Newborn Cross-Sectional Study of the INTERGROWTH-21st Project
-#' Villar, José et al.
+#' Villar, JosÃ© et al.
 #' The Lancet, Volume 384, Issue 9946, 857-868
 #'
 #' INTERGROWTH-21st very preterm size at birth reference charts. Lancet  2016 doi.org/10.1016/S0140-6736(16) 00384-6.
-#' Villar, José et al.
+#' Villar, JosÃ© et al.
 #' @examples
 #' # get 99th centile for Male birth weights across some gestational ages
 #' igb_centile2value(232:300, 99, var = "wtkg", sex = "Male")
@@ -24,7 +24,7 @@
 #' 
 #setwd("//cdc.gov/private/L329/you0/intergrowthApp/Backup - Copy (2)/Starting over/july16/july18/july27")
 load("ig_early_coefs.Rda")
-
+library(hbgd)
 igb_centile2value <- function(gagebrth, p = 50, var = "lencm", sex = "Female") {
   dat <- data.frame(x = gagebrth, p = p, var = var, sex = sex,
                     stringsAsFactors = FALSE)
@@ -101,11 +101,11 @@ igb_zscore2value <- function(gagebrth, z = 0, var = "lencm", sex = "Female") {
 #' @param var the name of the measurement to convert ("lencm", "wtkg", "hcircm")
 #' @param sex "Male" or "Female"
 #' @references International standards for newborn weight, length, and head circumference by gestational age and sex: the Newborn Cross-Sectional Study of the INTERGROWTH-21st Project
-#' Villar, José et al.
+#' Villar, JosÃ© et al.
 #' The Lancet, Volume 384, Issue 9946, 857-868
 #'
 #' INTERGROWTH-21st very preterm size at birth reference charts. Lancet  2016 doi.org/10.1016/S0140-6736(16) 00384-6.
-#' Villar, José et al.
+#' Villar, JosÃ© et al.
 #' @examples
 #' # get Male birth length z-scores
 #' # first we need just 1 record per subject with subject-level data
@@ -193,11 +193,11 @@ igb_value2zscore <- function(gagebrth, val, var = "lencm", sex = "Female") {
 #' @param hcircm head circumference (cm) measurement(s) to convert
 #' @param sex "Male" or "Female"
 #' @references International standards for newborn weight, length, and head circumference by gestational age and sex: the Newborn Cross-Sectional Study of the INTERGROWTH-21st Project
-#' Villar, José et al.
+#' Villar, JosÃ© et al.
 #' The Lancet, Volume 384, Issue 9946, 857-868
 #'
 #' INTERGROWTH-21st very preterm size at birth reference charts. Lancet  2016 doi.org/10.1016/S0140-6736(16) 00384-6.
-#' Villar, José et al.
+#' Villar, JosÃ© et al.
 #' @examples
 #' # get Male birth length z-scores
 #' # first we need just 1 record per subject with subject-level data
@@ -254,11 +254,11 @@ igb_hcircm2centile <- function(gagebrth, hcircm, sex = "Female") {
 #' @param p centile(s) to convert (must be between 0 and 100)
 #' @param sex "Male" or "Female"
 #' @references International standards for newborn weight, length, and head circumference by gestational age and sex: the Newborn Cross-Sectional Study of the INTERGROWTH-21st Project
-#' Villar, José et al.
+#' Villar, JosÃ© et al.
 #' The Lancet, Volume 384, Issue 9946, 857-868
 #'
 #' INTERGROWTH-21st very preterm size at birth reference charts. Lancet  2016 doi.org/10.1016/S0140-6736(16) 00384-6.
-#' Villar, José et al.
+#' Villar, JosÃ© et al.
 #' @examples
 #' # get 99th centile for Male birth weights across some gestational ages
 #' igb_centile2wtkg(168:300, 99, sex = "Male")
