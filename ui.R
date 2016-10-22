@@ -46,9 +46,9 @@ shinyUI(navbarPage("Birth Standards - CDC",
                             )),
                    
                    ### SECOND TAB ###
-                   tabPanel("Centile calculator (168 to 300 days)",
+                   tabPanel("IGB Centile calculator (168 to 300 days)",
                             pageWithSidebar(
-                              headerPanel('Centile calculator'),
+                              headerPanel('IGB Centile calculator'),
                               
                               sidebarPanel(numericInput("percentile", label = h3("Pick a centile (0 to 100):"), 
                                                        min = 0.01, 
@@ -78,5 +78,39 @@ shinyUI(navbarPage("Birth Standards - CDC",
                                 h4(p(style = "color:dodgerblue","The result:")),
                                           verbatimTextOutput("centileOutput"))
                             )
-                   )
+                   ),
+
+tabPanel("WHO Centile calculator (0-2 years)",
+         pageWithSidebar(
+           headerPanel('WHO Centile calculator'),
+           
+           sidebarPanel(numericInput("percentileWHO", label = h3("Pick a centile (0 to 100):"), 
+                                     min = 0.01, 
+                                     max = 99.99, value = 50),
+                        #                                            h5(p(style = "color:dodgerblue","You've selected this centile:")),
+                        #                                           verbatimTextOutput("value"),
+                        
+                        radioButtons("sexCentileWHO", label = h3("Sex:"),
+                                     choices = list("Male" = "Male", "Female" = "Female"), 
+                                     selected = "Male"),
+                        
+                        
+                        numericInput("gagebrthCentileWHO", label = h3("Gestational birth in weeks (0-104)"),
+                                     min=0, max=104, value=0)
+                        #                                            ,
+                        #                  
+                        #                                            actionButton("goButton2", "Start Analysis!")
+                        
+                        
+           ),
+           mainPanel(                            
+             
+             radioButtons("choiceCentileWHO", label = h3("Choose a measurement:"),
+                          choices = list("Head circ. (cm)" =  1, "Length (cm)" = 2, 
+                                         "Weight (kg)"= 3), selected = 1),
+             hr(),br(),br(),br(),
+             h4(p(style = "color:dodgerblue","The result:")),
+             verbatimTextOutput("centileOutputWHO"))
+         )
+)
 ))

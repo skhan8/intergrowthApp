@@ -44,7 +44,7 @@ shinyServer(function(input, output) {
     WHOData["WHO_headCentile"] <- NA
     
     
-    badRowsWHO<-WHOData[( !is.numeric(WHOData$age_weeks) | WHOData$age_weeks<=0 | is.na(WHOData$age_weeks)) | is.na(WHOData$sex) ,]
+    badRowsWHO<-WHOData[( !is.numeric(WHOData$age_weeks) | WHOData$age_weeks<0 | is.na(WHOData$age_weeks)) | is.na(WHOData$sex) ,]
     
     #keeping the good rows that can go ahead and be pushed through the calc. 
     # goodRowsWHO<-WHOData[( is.numeric(WHOData$age_weeks) & WHOData$age_weeks>0),]
@@ -168,6 +168,30 @@ output$centileOutput<-renderText({
   }
   # return(tempCentile)
   return(c("A",input$sexCentile, "baby who is ", input$gagebrthCentile, "days old under the", paste0(input$percentile, "th Centile has a"), measurement, "of", round(tempCentile, 3)))
+  
+})
+
+
+
+### SECOND TAB ###
+output$valueWHO <- renderPrint({input$percentile})
+
+
+output$centileOutputWHO<-renderText({
+  if(input$choiceCentileWHO==1){
+    measurement<-"head circumference (cm) "
+    tempCentile<-who_centile2hcircm(input$gagebrthCentileWHO, p = input$percentileWHO, sex = input$sexCentileWHO)
+  }
+  if(input$choiceCentileWHO==2){
+    measurement<-"length (cm)"
+    tempCentile<-who_centile2htcm(input$gagebrthCentileWHO, p = input$percentileWHO, sex = input$sexCentileWHO)
+  }
+  if(input$choiceCentileWHO==3){
+    measurement<-"weight (kg)"
+    tempCentile<-who_centile2wtkg(input$gagebrthCentileWHO, p = input$percentileWHO, sex = input$sexCentileWHO)
+  }
+  # return(tempCentile)
+  return(c("A",input$sexCentileWHO, "baby who is ", input$gagebrthCentileWHO, "weeks old under the", paste0(input$percentileWHO, "th Centile has a"), measurement, "of", round(tempCentile, 3)))
   
 })
 
