@@ -19,7 +19,10 @@ To open this app on your own computer, you'll need to follow these next steps:
 3. Run the following R code within an open session of RStudio
 
 ```r
+options(repos = c( CRAN = "http://cran.rstudio.com/",
+tessera = "http://packages.tessera.io"))
 install.packages(c("shiny","hbgd")) 
+
 shiny::runGitHub("intergrowthApp","skhan8")
 ```
 
